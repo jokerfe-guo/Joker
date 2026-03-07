@@ -6,3 +6,10 @@ dist/
 
 # Local Stitch exports
 stitch_exports/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
