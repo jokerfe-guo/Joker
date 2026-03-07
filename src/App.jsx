@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import wangLeehomImage from './assets/wang-leehom.jpg'
 
 const screens = [
   { id: 'resume', label: 'Resume' },
@@ -56,7 +57,7 @@ export default function App() {
       <div className="orb orb-right" />
 
       <aside className="side-rail">
-        <div className="rail-logo">DEV</div>
+        <div className="rail-logo">AI</div>
         <div className="rail-dots">
           {screens.map((screen) => (
             <button
@@ -71,45 +72,39 @@ export default function App() {
       </aside>
 
       <div className="page-shell">
-        <header className="topbar glass">
-          <div>
-            <p className="eyebrow">Stitch Export Rebuilt in Vite + React</p>
-            <h1>Front-end Developer Glassmorphism Resume</h1>
-          </div>
-
-          <nav className="screen-switcher" aria-label="Screens">
-            {screens.map((screen) => (
-              <button
-                key={screen.id}
-                type="button"
-                className={screen.id === activeScreen ? 'switch-pill active' : 'switch-pill'}
-                onClick={() => setActiveScreen(screen.id)}
-              >
-                {screen.label}
-              </button>
-            ))}
-          </nav>
-        </header>
-
-        {activeScreen === 'resume' && <ResumeScreen />}
-        {activeScreen === 'blog-home' && <BlogHomeScreen />}
-        {activeScreen === 'article' && <ArticleScreen />}
-        {activeScreen === 'project' && <ProjectScreen />}
+        {activeScreen === 'resume' && (
+          <ResumeScreen activeScreen={activeScreen} setActiveScreen={setActiveScreen} />
+        )}
+        {activeScreen === 'blog-home' && (
+          <BlogHomeScreen activeScreen={activeScreen} setActiveScreen={setActiveScreen} />
+        )}
+        {activeScreen === 'article' && (
+          <ArticleScreen activeScreen={activeScreen} setActiveScreen={setActiveScreen} />
+        )}
+        {activeScreen === 'project' && (
+          <ProjectScreen activeScreen={activeScreen} setActiveScreen={setActiveScreen} />
+        )}
       </div>
     </main>
   )
 }
 
-function ResumeScreen() {
+function ResumeScreen({ activeScreen, setActiveScreen }) {
   return (
     <section className="screen">
       <nav className="floating-nav glass">
-        <span className="brand-mark">DEV.FS</span>
-        <div className="floating-links">
-          <a href="#home">Home</a>
-          <a href="#skills">Skills</a>
-          <a href="#experience">Experience</a>
-          <a href="#projects">Projects</a>
+        <span className="brand-mark">Joker.AI</span>
+        <div className="screen-switcher" aria-label="Screens">
+          {screens.map((screen) => (
+            <button
+              key={screen.id}
+              type="button"
+              className={screen.id === activeScreen ? 'switch-pill active' : 'switch-pill'}
+              onClick={() => setActiveScreen(screen.id)}
+            >
+              {screen.label}
+            </button>
+          ))}
         </div>
         <button type="button" className="cta-button">
           Contact
@@ -118,11 +113,14 @@ function ResumeScreen() {
 
       <section id="home" className="hero-section glass organic-card">
         <div className="hero-copy">
-          <span className="availability-pill">Available for Hire</span>
-          <h2>
-            Alex <br />
-            <span>Riverside</span>
-          </h2>
+          <span className="availability-pill">Currently at Kuaishou</span>
+          <div className="hero-heading">
+            <h2>Joker</h2>
+            <span className="hero-subtitle">
+              <span className="hero-subtitle__orb" aria-hidden="true" />
+              <span className="hero-subtitle__text">Senior Front-end Engineer</span>
+            </span>
+          </div>
           <p>
             Crafting high-performance digital experiences with immersive aesthetics, fluid
             interactions, and front-end systems that survive real product scale.
@@ -140,8 +138,12 @@ function ResumeScreen() {
 
         <div className="hero-portrait">
           <div className="portrait-aura" />
-          <div className="portrait-shell">
-            <div className="portrait-face">AR</div>
+          <div className="portrait-ring">
+            <div className="portrait-shell">
+              <div className="portrait-face">
+                <img className="portrait-image" src={wangLeehomImage} alt="Wang Leehom portrait" />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -199,9 +201,25 @@ function ResumeScreen() {
   )
 }
 
-function BlogHomeScreen() {
+function BlogHomeScreen({ activeScreen, setActiveScreen }) {
   return (
     <section className="screen blog-layout-screen">
+      <nav className="floating-nav glass">
+        <span className="brand-mark">Joker.AI</span>
+        <div className="screen-switcher" aria-label="Screens">
+          {screens.map((screen) => (
+            <button
+              key={screen.id}
+              type="button"
+              className={screen.id === activeScreen ? 'switch-pill active' : 'switch-pill'}
+              onClick={() => setActiveScreen(screen.id)}
+            >
+              {screen.label}
+            </button>
+          ))}
+        </div>
+      </nav>
+
       <header className="blog-header">
         <div>
           <p className="eyebrow">DevLog v2.0.4</p>
@@ -252,9 +270,25 @@ function BlogHomeScreen() {
   )
 }
 
-function ArticleScreen() {
+function ArticleScreen({ activeScreen, setActiveScreen }) {
   return (
     <section className="screen article-layout-screen">
+      <nav className="floating-nav glass">
+        <span className="brand-mark">Joker.AI</span>
+        <div className="screen-switcher" aria-label="Screens">
+          {screens.map((screen) => (
+            <button
+              key={screen.id}
+              type="button"
+              className={screen.id === activeScreen ? 'switch-pill active' : 'switch-pill'}
+              onClick={() => setActiveScreen(screen.id)}
+            >
+              {screen.label}
+            </button>
+          ))}
+        </div>
+      </nav>
+
       <div className="progress-track">
         <div className="progress-fill" />
       </div>
@@ -296,9 +330,25 @@ function ArticleScreen() {
   )
 }
 
-function ProjectScreen() {
+function ProjectScreen({ activeScreen, setActiveScreen }) {
   return (
     <section className="screen project-layout-screen">
+      <nav className="floating-nav glass">
+        <span className="brand-mark">Joker.AI</span>
+        <div className="screen-switcher" aria-label="Screens">
+          {screens.map((screen) => (
+            <button
+              key={screen.id}
+              type="button"
+              className={screen.id === activeScreen ? 'switch-pill active' : 'switch-pill'}
+              onClick={() => setActiveScreen(screen.id)}
+            >
+              {screen.label}
+            </button>
+          ))}
+        </div>
+      </nav>
+
       <div className="project-backdrop" />
 
       <article className="project-modal glass">
