@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Alex Riverside | Ethereal Liquid Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00d4ff",
+                        "ethereal-blue": "#a5b4fc",
+                        "ethereal-purple": "#c084fc",
+                        "background-dark": "#02040a",
+                        "glass": "rgba(255, 255, 255, 0.03)",
+                        "glass-border": "rgba(255, 255, 255, 0.08)",
+                        "silver-gray": "#94a3b8"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "droplet": "4rem 2rem 5rem 3rem",
+                        "droplet-reverse": "3rem 5rem 2rem 4rem",
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #02040a;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(220,100%,10%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(260,100%,10%,1) 0, transparent 50%),
+                radial-gradient(at 50% 100%, hsla(190,100%,5%,1) 0, transparent 50%);
+        }.liquid-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.4;
+            background: 
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 1000 1000' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
+                linear-gradient(135deg, #02040a 0%, #0c0e1a 100%);
+            mask-image: radial-gradient(circle at center, black, transparent 80%);
+        }
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .droplet-shape {
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+        }
+        .organic-panel {
+            border-radius: 3rem 5rem 4rem 6rem / 5rem 3rem 6rem 4rem;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            opacity: 0.3;
+            mix-blend-mode: screen;
+        }
+        .orb-blue {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #4f46e5 0%, transparent 70%);
+            top: -10%;
+            left: -10%;
+        }
+        .orb-purple {
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, #7e22ce 0%, transparent 70%);
+            bottom: 10%;
+            right: -10%;
+        }
+        .timeline-line {
+            width: 6px;
+            background: linear-gradient(to bottom, #4f46e5, #ec4899, #00d4ff);
+            mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+            filter: blur(0.5px);
+            border-radius: 99px;
+        }.curved-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+            width: 100px;
+            border-left: 4px solid transparent;
+            border-image: linear-gradient(to bottom, #4f46e5, #ec4899) 1;
+            filter: blur(2px);
+            opacity: 0.5;
+        }
+        .glow-text {
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.4), 0 0 40px rgba(0, 212, 255, 0.2);
+        }
+        .profile-aura {
+            filter: drop-shadow(0 0 30px rgba(79, 70, 229, 0.4)) drop-shadow(0 0 60px rgba(0, 212, 255, 0.2));
+        }
+        .skill-tile {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border-radius: 2rem 1rem 2.5rem 1.5rem;
+        }
+        .skill-tile:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(0, 212, 255, 0.3);
+            border-radius: 1.5rem 2.5rem 1rem 2rem;
+        }
+        .nav-glass {
+            background: rgba(10, 10, 20, 0.4);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white selection:bg-primary selection:text-background-dark overflow-x-hidden">
+<div class="liquid-bg"></div>
+<div class="fixed inset-0 overflow-hidden pointer-events-none">
+<div class="orb orb-blue"></div>
+<div class="orb orb-purple"></div>
+</div>
+<aside class="fixed left-8 top-1/2 -translate-y-1/2 z-50 hidden lg:block">
+<div class="nav-glass rounded-full py-10 px-4 flex flex-col gap-10 items-center shadow-2xl">
+<a class="side-nav-item group relative p-3 rounded-full text-silver-gray hover:text-primary transition-all duration-300" href="#home">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="absolute left-16 bg-white/10 backdrop-blur-md text-white px-3 py-1.5 rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0 whitespace-nowrap border border-white/10">Profile</span>
+</a>
+<a class="side-nav-item group relative p-3 rounded-full text-silver-gray hover:text-primary transition-all duration-300" href="#skills">
+<span class="material-symbols-outlined text-2xl">bolt</span>
+<span class="absolute left-16 bg-white/10 backdrop-blur-md text-white px-3 py-1.5 rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0 whitespace-nowrap border border-white/10">Skills</span>
+</a>
+<a class="side-nav-item group relative p-3 rounded-full text-silver-gray hover:text-primary transition-all duration-300" href="#experience">
+<span class="material-symbols-outlined text-2xl">history_edu</span>
+<span class="absolute left-16 bg-white/10 backdrop-blur-md text-white px-3 py-1.5 rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0 whitespace-nowrap border border-white/10">Experience</span>
+</a>
+<a class="side-nav-item group relative p-3 rounded-full text-silver-gray hover:text-primary transition-all duration-300" href="#projects">
+<span class="material-symbols-outlined text-2xl">folder_open</span>
+<span class="absolute left-16 bg-white/10 backdrop-blur-md text-white px-3 py-1.5 rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0 whitespace-nowrap border border-white/10">Projects</span>
+</a>
+</div>
+</aside>
+<div class="relative min-h-screen flex flex-col items-center px-4 py-8 md:px-0">
+<nav class="fixed top-8 z-50 w-full max-w-[1000px] px-4">
+<div class="nav-glass rounded-full px-8 py-4 flex items-center justify-between shadow-2xl">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-ethereal-purple flex items-center justify-center">
+<span class="material-symbols-outlined text-background-dark text-sm font-bold">terminal</span>
+</div>
+<span class="font-bold tracking-tight text-xl bg-clip-text text-transparent bg-gradient-to-r from-white to-silver-gray">DEV.FS</span>
+</div>
+<div class="hidden md:flex items-center gap-10 text-sm font-medium">
+<a class="text-silver-gray hover:text-primary transition-colors relative group" href="#home">Home<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span></a>
+<a class="text-silver-gray hover:text-primary transition-colors relative group" href="#skills">Skills<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span></a>
+<a class="text-silver-gray hover:text-primary transition-colors relative group" href="#experience">Experience<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span></a>
+<a class="text-silver-gray hover:text-primary transition-colors relative group" href="#projects">Projects<span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full"></span></a>
+</div>
+<button class="bg-gradient-to-r from-primary to-ethereal-blue text-background-dark px-6 py-2 rounded-full text-sm font-bold hover:shadow-[0_0_30px_rgba(0,212,255,0.5)] transition-all transform hover:scale-105 active:scale-95">
+                Contact
+            </button>
+</div>
+</nav>
+<main class="w-full max-w-[1000px] mt-32 flex flex-col gap-16">
+<section class="glass-panel organic-panel p-10 md:p-16 flex flex-col md:flex-row items-center gap-14 relative overflow-hidden" id="home">
+<div class="flex-1 space-y-8 relative z-10">
+<div class="space-y-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20">
+<span class="flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-primary font-bold tracking-widest uppercase text-[10px]">Available for Hire</span>
+</div>
+<h1 class="text-6xl md:text-8xl font-bold leading-tight tracking-tighter">Alex <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-ethereal-blue to-ethereal-purple glow-text">Riverside</span></h1>
+<p class="text-silver-gray text-xl max-w-lg leading-relaxed font-light">
+                        Crafting high-performance digital experiences with a focus on immersive aesthetics and fluid interactions.
+                    </p>
+</div>
+<div class="flex flex-wrap gap-5">
+<button class="bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 px-8 py-4 rounded-2xl font-bold flex items-center gap-3 transition-all transform hover:-translate-y-1">
+<span class="material-symbols-outlined text-[22px] text-primary">rss_feed</span>
+                        View My Blog
+                    </button>
+<button class="glass-panel px-8 py-4 rounded-2xl font-bold flex items-center gap-3 hover:bg-white/5 transition-all transform hover:-translate-y-1">
+<span class="material-symbols-outlined text-[22px] text-ethereal-purple">code</span>
+                        View Github
+                    </button>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute -inset-6 bg-gradient-to-r from-primary via-ethereal-purple to-pink-500 rounded-full blur-[40px] opacity-20 group-hover:opacity-40 transition duration-1000 profile-aura"></div>
+<div class="relative w-56 h-56 md:w-72 md:h-72 droplet-shape overflow-hidden border-2 border-white/10 shadow-2xl">
+<img alt="Developer Portrait" class="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVnyjy7R0-UFHoFJHbQaB6xGtYiQ5lMndsvRZ56-CTAEPcE6L8OQ5PXYO55IjEiCmGZSyKDfFOpb-Zv529pkxShKJUmMUS-4Wq9ApIJYo8VIZXUmFhK25VOR5T-97neglKkY693S3Wpz4EaCv4iBAcG2rpbMQmDrKFirlQ1IyuN7y2trlLnhrxPDaNK9I4nNxvvscjDZvMpKxV9NNhQcp8ABNLhNz7U9xdz-M7GuPbORZQK0H0Be6rU6GezIJCM6AKT33ZfTSqqAm6"/>
+</div>
+<div class="absolute -bottom-4 -right-4 w-24 h-24 bg-primary/20 blur-3xl rounded-full"></div>
+</div>
+</section>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="glass-panel p-6 rounded-droplet text-center transform hover:scale-105 transition-all duration-500">
+<div class="text-3xl font-bold text-primary">5+</div>
+<div class="text-[10px] text-silver-gray uppercase tracking-widest mt-1">Years Exp</div>
+</div>
+<div class="glass-panel p-6 rounded-droplet-reverse text-center transform hover:scale-105 transition-all duration-500">
+<div class="text-3xl font-bold text-ethereal-purple">40+</div>
+<div class="text-[10px] text-silver-gray uppercase tracking-widest mt-1">Projects</div>
+</div>
+<div class="glass-panel p-6 rounded-droplet text-center transform hover:scale-105 transition-all duration-500">
+<div class="text-3xl font-bold text-primary">12</div>
+<div class="text-[10px] text-silver-gray uppercase tracking-widest mt-1">Awards</div>
+</div>
+<div class="glass-panel p-6 rounded-droplet-reverse text-center transform hover:scale-105 transition-all duration-500">
+<div class="text-3xl font-bold text-ethereal-purple">100%</div>
+<div class="text-[10px] text-silver-gray uppercase tracking-widest mt-1">Success</div>
+</div>
+</div>
+<section class="space-y-10" id="skills">
+<div class="flex items-end justify-between px-6">
+<div>
+<h2 class="text-4xl font-bold tracking-tight">Tech Stack</h2>
+<p class="text-silver-gray text-base mt-2 font-light">Interactive tiles ready for technical deep-dives</p>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 px-2">
+<div class="skill-tile glass-panel p-8 group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 group-hover:border-primary/50 transition-colors">
+<img alt="React" class="w-9 h-9" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLOP1NLGKOF0lYqmv8xMZXMQ7rmEyG3f9UDLB1JgpDfzb9r8FA1qtCXTnlAAMTIuuXExtdhbA3XVsYN-eTXFRihY1QjBszlMoIqopl6X_g_1GfsQyL3zjz4V-xtO-gxFe7V_fhfHC0h7KFIWT3M5f5-GtSI_NV_BSeN0tLHyBYpywJ6kieMGHNlcgisKuSWSGKihBeo6DL6mA0ZZmvNaqXUN7fWIcScOX7vi-ti8v_7mf9WL2iSEOBI2NW4rH0Zkw5yUmCj20I8JA6"/>
+</div>
+<span class="material-symbols-outlined text-silver-gray/30 group-hover:text-primary transition-all">open_in_full</span>
+</div>
+<h3 class="text-2xl font-bold mb-3">React &amp; Next.js</h3>
+<p class="text-silver-gray text-sm leading-relaxed mb-8 font-light">Mastering React 18 concurrent features, server components, and complex state synchronization.</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-primary">TS</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-ethereal-purple">RX</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-white">NX</div>
+</div>
+<span class="text-[10px] font-black text-primary tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">EXPLORE →</span>
+</div>
+</div>
+<div class="skill-tile glass-panel p-8 group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 group-hover:border-ethereal-purple/50 transition-colors">
+<img alt="Vue.js" class="w-9 h-9" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBQPxSGd7l3oOvA_7RDrIuGRnUQSsn97gUOVU5WCANt0wBEn2jtRvsLXg_53NvXAOn9wrusNOtOXrK5eKMuBObDlWOv-zjUNTOZRrZvee6jWQQacVL_jqo67y430vz_Oh41K59k6FcJbOMi0neRown3zDUeGF_YOaFvn0ZWK7i2PLYQB9xI-um6SnrsicaPTR8EkXqGKoIIFN5WodgZhPDVPteS_7GaZ13nLdssdR5EMv5ZsqWS_mbvFOIYHCMw31OfwsQk9Cu5nGn"/>
+</div>
+<span class="material-symbols-outlined text-silver-gray/30 group-hover:text-ethereal-purple transition-all">open_in_full</span>
+</div>
+<h3 class="text-2xl font-bold mb-3">Vue.js Ecosystem</h3>
+<p class="text-silver-gray text-sm leading-relaxed mb-8 font-light">Advanced Composition API patterns and Nuxt 3 performance optimization workflows.</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-primary">PI</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-ethereal-purple">VT</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-white">NT</div>
+</div>
+<span class="text-[10px] font-black text-ethereal-purple tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">EXPLORE →</span>
+</div>
+</div>
+<div class="skill-tile glass-panel p-8 group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 group-hover:border-primary/50 transition-colors">
+<img alt="Node.js" class="w-9 h-9" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmkQeYKa3t-Qs_w9_yJj8x3Yap9vcWqaTWNKnVogaldc8ZKt5KFoQa4O7PvwijaSfxg96QEDNNzTG-ctO1z620VEHANyd6McXtBnoBBRgAYqDCZX0OmgAnx92H2hwwocYAuzBtnL_xDbX3y2jAHLI3M3Jp1bkVI5K2S_lNKjXtP2kqNfRZFrfGz9bGtJZdXRpkndeJo-DmPyNfN60e6CwsGb8A_gpiq1CBi9whYOmamFp_zYnVdCg_vSvNKuqCzuYFadgSoXNp5HoZ"/>
+</div>
+<span class="material-symbols-outlined text-silver-gray/30 group-hover:text-primary transition-all">open_in_full</span>
+</div>
+<h3 class="text-2xl font-bold mb-3">Node.js / Backend</h3>
+<p class="text-silver-gray text-sm leading-relaxed mb-8 font-light">Scalable microservices architecture using Express, Fastify, and Prisma ORM.</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-primary">EX</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-ethereal-purple">DB</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-white">RD</div>
+</div>
+<span class="text-[10px] font-black text-primary tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">EXPLORE →</span>
+</div>
+</div>
+<div class="skill-tile glass-panel p-8 group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 group-hover:border-ethereal-purple/50 transition-colors">
+<img alt="Webpack" class="w-9 h-9" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbscrPqJof__7_D8-tBmu41qCM_ocue5x7DQscj2K3rwV4XY1LLAS0sRgHEFFbrCc40_8Lox9EMqgB4Hq4mEAjHF7mh7YOe182M6laWNZfGH8YmhiwTQNpyzoM_mz8rcAsxBj8HNxYRZHB135Q76sydlsDRPNFEYGJeE-TgInSI89gW6pD7Vji8dtKh2CuqlU7YH9uMCWxtAL4pRT5jn_bIdchrLtpZZJkSITKwlJngdo0joJYGMDp8hBR70rWiaZBy0j6_plUg0dA"/>
+</div>
+<span class="material-symbols-outlined text-silver-gray/30 group-hover:text-ethereal-purple transition-all">open_in_full</span>
+</div>
+<h3 class="text-2xl font-bold mb-3">Build Orchestration</h3>
+<p class="text-silver-gray text-sm leading-relaxed mb-8 font-light">Deep configuration of Webpack and Vite for production-grade asset optimization.</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-primary">VT</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-ethereal-purple">RL</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-white">ES</div>
+</div>
+<span class="text-[10px] font-black text-ethereal-purple tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">EXPLORE →</span>
+</div>
+</div>
+<div class="skill-tile glass-panel p-8 group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 group-hover:border-primary/50 transition-colors">
+<img alt="Three.js" class="w-9 h-9 invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpdjNFQgPLcG-O9MhEXjhieybiIakpyhkYGsKRPknb0IC_lwE_trrpobjGt0i0mdLkHeGGOMotSDxqG_5FWRtojCO4UdUCzLAr0eChFqjR8OUIFSKhyKAlTR_M5OpSCOlKSwxgPTQCVsNaMkw2BfC-y2LsANAhZvASCiBS8aBkSNj2kYnUXh9A-6BiNhASAno92A1GANMjl59R6VcbmmiZiNQ_qVV_Mg5duQeeaKs_NC1f8x8TSl1BEPKCZaCs0vULKWJUXlIzX61A"/>
+</div>
+<span class="material-symbols-outlined text-silver-gray/30 group-hover:text-primary transition-all">open_in_full</span>
+</div>
+<h3 class="text-2xl font-bold mb-3">WebGL &amp; Three.js</h3>
+<p class="text-silver-gray text-sm leading-relaxed mb-8 font-light">Building immersive 3D environments and custom GLSL shaders for the browser.</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-primary">R3</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-ethereal-purple">SL</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-white">GS</div>
+</div>
+<span class="text-[10px] font-black text-primary tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">EXPLORE →</span>
+</div>
+</div>
+<div class="skill-tile glass-panel p-8 group">
+<div class="flex justify-between items-start mb-6">
+<div class="w-14 h-14 flex items-center justify-center rounded-2xl bg-white/5 border border-white/10 group-hover:border-ethereal-purple/50 transition-colors">
+<img alt="Tailwind" class="w-9 h-9" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbOYRhpQspfK22RIlAvyWXuw-GM6ivdnl7Dn-G_1J0w_mIto2fVXhjsR0Zze7E2pwGrQS1bhPPFADiOKkAuJOlXlxb7gKJ4UPL6Z1antNSbE2RpO8_RSegvqDez3yCzCqIPkwqKTp04DpPDuz42pO-JpiA_jCAVicFuo5Z59xMd9uweMmY0mVA_FOlPQk7mVWJu5aTICyr2wmZ9tTGKtJy93OAS67jj9u0YTdrno0fe28E38CdM7_Qge6Ypm6th8omzTWzv7kJ14ZS"/>
+</div>
+<span class="material-symbols-outlined text-silver-gray/30 group-hover:text-ethereal-purple transition-all">open_in_full</span>
+</div>
+<h3 class="text-2xl font-bold mb-3">UI Engineering</h3>
+<p class="text-silver-gray text-sm leading-relaxed mb-8 font-light">Expertise in utility-first CSS and component-driven design systems (Tailwind/Radix).</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-primary">TW</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-ethereal-purple">RX</div>
+<div class="w-10 h-10 rounded-full border-2 border-background-dark bg-[#1a1c2e] flex items-center justify-center text-[11px] font-bold text-white">SC</div>
+</div>
+<span class="text-[10px] font-black text-ethereal-purple tracking-widest opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">EXPLORE →</span>
+</div>
+</div>
+</div>
+</section>
+<section class="space-y-16 py-10" id="experience">
+<h2 class="text-4xl font-bold px-6 tracking-tight">Professional Path</h2>
+<div class="relative px-6">
+<div class="absolute left-6 md:left-1/2 top-0 bottom-0 timeline-line -translate-x-1/2"></div>
+<div class="relative flex flex-col md:flex-row items-start md:items-center gap-12 mb-24">
+<div class="md:w-1/2 md:text-right md:pr-12">
+<div class="glass-panel p-8 organic-panel inline-block w-full md:w-auto text-left border-l-4 border-l-indigo-500/50 hover:border-l-primary transition-all transform hover:-translate-x-2">
+<span class="text-primary text-[10px] font-black uppercase tracking-widest">2021 — PRESENT</span>
+<h3 class="text-2xl font-bold mt-2">Lead Front-end Developer</h3>
+<p class="text-ethereal-blue font-semibold mb-4 text-sm">Nebula Labs, Tokyo</p>
+<ul class="text-silver-gray text-sm space-y-3 font-light">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span> Architecting scalable design systems for SaaS platforms</li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span> Mentoring junior engineers and driving code quality standards</li>
+</ul>
+</div>
+</div>
+<div class="absolute left-6 md:left-1/2 w-6 h-6 rounded-full bg-gradient-to-tr from-indigo-500 to-primary -translate-x-1/2 shadow-[0_0_20px_#4f46e5] z-10 border-4 border-background-dark"></div>
+<div class="md:w-1/2"></div>
+</div>
+<div class="relative flex flex-col md:flex-row items-start md:items-center gap-12 mb-16">
+<div class="md:w-1/2"></div>
+<div class="absolute left-6 md:left-1/2 w-6 h-6 rounded-full bg-gradient-to-tr from-pink-500 to-ethereal-purple -translate-x-1/2 shadow-[0_0_20px_#ec4899] z-10 border-4 border-background-dark"></div>
+<div class="md:w-1/2 md:pl-12">
+<div class="glass-panel p-8 organic-panel border-l-4 border-l-pink-500/50 hover:border-l-primary transition-all transform hover:translate-x-2">
+<span class="text-primary text-[10px] font-black uppercase tracking-widest">2018 — 2021</span>
+<h3 class="text-2xl font-bold mt-2">Creative Engineer</h3>
+<p class="text-ethereal-purple font-semibold mb-4 text-sm">Aura Interactive</p>
+<ul class="text-silver-gray text-sm space-y-3 font-light">
+<li class="flex items-start gap-2"><span class="text-pink-500 mt-1">•</span> Developed interactive marketing campaigns for global brands</li>
+<li class="flex items-start gap-2"><span class="text-pink-500 mt-1">•</span> Built 3D web configurators using React Three Fiber</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="space-y-12" id="projects">
+<div class="flex items-center justify-between px-6">
+<h3 class="text-3xl font-bold tracking-tight">Signature Projects</h3>
+<a class="text-primary text-sm font-black flex items-center gap-2 hover:gap-3 transition-all group" href="#">
+                    ALL WORK <span class="material-symbols-outlined text-base group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10 px-2">
+<div class="project-card relative overflow-hidden organic-panel group h-[450px] shadow-2xl">
+<img alt="Project One" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6cormSm7LOf0TTqkWH0v3TrPWeV80Xietmh2DBBnxE_0w5g0MQCkauxMGVTGUF2jP4B-xGSaJ8nn5jFCdVwuKOT18zCmHkcMafCwZTc2Hj-JraXVV33sEYokxuZWpjUJwOVpNiN2Cl1KkJr893HKftYcGX0PoGx273Y2tOtq6eKpVvK9gMWDDebr-aqECQjddMY7KUXkREoiSUBSqxg9duDccnBFxuIaVkocxAe3yzUDzCzG9JVCPfueQHc0FEVb8XEyRkMIWsBbT"/>
+<div class="project-overlay absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 flex flex-col justify-end p-10 backdrop-blur-[2px]">
+<div class="translate-y-10 group-hover:translate-y-0 transition-transform duration-500">
+<div class="flex gap-2 mb-5">
+<span class="text-[9px] bg-primary/20 text-primary border border-primary/30 px-4 py-1.5 rounded-full font-black uppercase tracking-widest">Web3</span>
+<span class="text-[9px] bg-white/10 text-white border border-white/20 px-4 py-1.5 rounded-full font-black uppercase tracking-widest">R3F</span>
+</div>
+<h4 class="text-4xl font-bold text-white mb-4">Ether Dashboard</h4>
+<p class="text-silver-gray text-sm leading-relaxed mb-8 font-light max-w-sm">A futuristic crypto analytics dashboard with real-time 3D charts and biometric-inspired authentication flows.</p>
+<div class="flex gap-5">
+<button class="bg-primary text-background-dark px-6 py-3 rounded-xl text-xs font-black hover:scale-105 transition-all">Case Study</button>
+<button class="glass-panel px-6 py-3 rounded-xl text-xs font-black border-white/10 hover:bg-white/10 transition-all">Live Demo</button>
+</div>
+</div>
+</div>
+</div>
+<div class="project-card relative overflow-hidden organic-panel group h-[450px] shadow-2xl">
+<img alt="Project Two" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgW6OAsaGjeC3kljJcHn6G3weRm9Ac-KHMDDZFqFv8aFXKnc_RxlaE3kGKImEEoOdwKC2092Pd6sXROEeoxi9WR5MVOgIEt4L9CfhPwVh8J-6Oy_-pql4XIpXWJZ-EGaeTUxeyre76hK4sy8UnKBt9heRGq6IismUnkM-2p0kOaPU32YHIDtOvz9LXcO1CKW-dwA0nz5oi9Xnv-RcNDsUtfX8lMfcdlBa_kM8XHjgfMDTRhgufy8xwE2HncoGzxbIk5ieVnjMT940G"/>
+<div class="project-overlay absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700 flex flex-col justify-end p-10 backdrop-blur-[2px]">
+<div class="translate-y-10 group-hover:translate-y-0 transition-transform duration-500">
+<div class="flex gap-2 mb-5">
+<span class="text-[9px] bg-ethereal-purple/20 text-ethereal-purple border border-ethereal-purple/30 px-4 py-1.5 rounded-full font-black uppercase tracking-widest">Design Ops</span>
+<span class="text-[9px] bg-white/10 text-white border border-white/20 px-4 py-1.5 rounded-full font-black uppercase tracking-widest">React</span>
+</div>
+<h4 class="text-4xl font-bold text-white mb-4">Quantum UI</h4>
+<p class="text-silver-gray text-sm leading-relaxed mb-8 font-light max-w-sm">A modular, dark-themed UI library focused on accessibility and ultra-low latency interactions.</p>
+<div class="flex gap-5">
+<button class="bg-ethereal-purple text-white px-6 py-3 rounded-xl text-xs font-black hover:scale-105 transition-all shadow-lg shadow-ethereal-purple/20">View Docs</button>
+<button class="glass-panel px-6 py-3 rounded-xl text-xs font-black border-white/10 hover:bg-white/10 transition-all">Storybook</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="glass-panel organic-panel p-12 md:p-24 text-center space-y-10 mb-24 relative overflow-hidden">
+<div class="absolute -top-32 -right-32 w-80 h-80 bg-primary/10 blur-[120px] rounded-full"></div>
+<div class="absolute -bottom-32 -left-32 w-80 h-80 bg-ethereal-purple/10 blur-[120px] rounded-full"></div>
+<div class="max-w-2xl mx-auto space-y-6 relative z-10">
+<h2 class="text-5xl md:text-6xl font-bold leading-tight tracking-tight">Let's create something <span class="text-primary glow-text">extraordinary</span></h2>
+<p class="text-silver-gray text-lg font-light">Interested in collaborating? My inbox is always open for new opportunities and creative challenges.</p>
+</div>
+<div class="flex flex-col md:flex-row items-center justify-center gap-8 relative z-10">
+<a class="bg-gradient-to-r from-primary via-ethereal-blue to-primary bg-[length:200%_auto] text-background-dark px-12 py-6 rounded-3xl font-black text-xl hover:shadow-[0_0_50px_rgba(0,212,255,0.4)] transition-all transform hover:scale-105 flex items-center gap-4" href="mailto:hello@alexriverside.dev">
+<span class="material-symbols-outlined font-black">send</span>
+                    hello@alexriverside.dev
+                </a>
+<div class="flex gap-5">
+<a class="w-16 h-16 rounded-2xl glass-panel flex items-center justify-center hover:text-primary transition-all hover:border-primary/50 group" href="#">
+<span class="material-symbols-outlined text-[28px] group-hover:scale-110 transition-transform">link</span>
+</a>
+<a class="w-16 h-16 rounded-2xl glass-panel flex items-center justify-center hover:text-ethereal-purple transition-all hover:border-ethereal-purple/50 group" href="#">
+<span class="material-symbols-outlined text-[28px] group-hover:scale-110 transition-transform">code_off</span>
+</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="w-full max-w-[1000px] py-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-silver-gray text-sm">
+<p class="font-light">© 2024 Alex Riverside. Built with precision and passion.</p>
+<div class="flex gap-10">
+<a class="hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="hover:text-primary transition-colors" href="#">Cookies</a>
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">Back to Top <span class="material-symbols-outlined text-xs">arrow_upward</span></a>
+</div>
+</footer>
+</div>
+
+</body></html>
