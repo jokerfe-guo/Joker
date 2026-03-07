@@ -130,9 +130,14 @@ function ResumeScreen({ activeScreen, setActiveScreen }) {
             <button type="button" className="soft-button primary">
               View My Blog
             </button>
-            <button type="button" className="soft-button">
+            <a
+              className="soft-button"
+              href="https://github.com/jokerfe-guo"
+              target="_blank"
+              rel="noreferrer"
+            >
               View Github
-            </button>
+            </a>
           </div>
         </div>
 
