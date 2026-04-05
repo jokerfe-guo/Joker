@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { OrbBackground } from '@/components/glass/OrbBackground'
 import { SideRail } from '@/components/glass/SideRail'
+import { ThemeProvider } from '@/components/glass/ThemeProvider'
 
 export const metadata: Metadata = {
   title: {
@@ -15,6 +16,11 @@ export const metadata: Metadata = {
     siteName: 'Joker.AI',
     type: 'website',
   },
+  alternates: {
+    types: {
+      'application/rss+xml': '/rss.xml',
+    },
+  },
 }
 
 export default function RootLayout({
@@ -25,13 +31,15 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <div className="app-shell">
-          <OrbBackground />
-          <SideRail />
-          <div className="page-shell">
-            {children}
+        <ThemeProvider>
+          <div className="app-shell">
+            <OrbBackground />
+            <SideRail />
+            <div className="page-shell">
+              {children}
+            </div>
           </div>
-        </div>
+        </ThemeProvider>
       </body>
     </html>
   )

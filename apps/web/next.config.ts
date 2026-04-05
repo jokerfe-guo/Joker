@@ -19,3 +19,9 @@ const nextConfig: NextConfig = {
 }
 
 export default nextConfig
+
+// ─── Post-build: run Pagefind to index the static output ──────────────────────
+// Add this script to your package.json:
+//   "postbuild": "pagefind --site .next/server/app --output-path public/pagefind"
+// Or when using Cloudflare Pages, set the build command to:
+//   pnpm build && pagefind --site .next/server/app --output-path public/pagefind

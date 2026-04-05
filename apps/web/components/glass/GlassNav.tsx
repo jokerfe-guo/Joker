@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { ThemeToggle } from './ThemeToggle'
 
 const navItems = [
   { label: 'Resume', href: '/' },
@@ -33,9 +34,12 @@ export function GlassNav() {
         ))}
       </div>
 
-      <Link href="/blog" className="cta-button">
-        Contact
-      </Link>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <ThemeToggle />
+        <Link href="/blog" className="cta-button">
+          Contact
+        </Link>
+      </div>
     </nav>
   )
 }
