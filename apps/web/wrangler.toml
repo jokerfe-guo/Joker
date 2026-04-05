@@ -1,0 +1,12 @@
+name = "joker-blog"
+compatibility_date = "2026-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "joker-blog"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+[vars]
+NEXT_PUBLIC_SITE_URL = "https://joker.ai"
+ADMIN_SECRET = "REPLACE_WITH_YOUR_SECRET"

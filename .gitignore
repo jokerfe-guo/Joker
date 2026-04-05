@@ -1,8 +1,14 @@
 node_modules/
+.next/
 dist/
+.turbo/
 .DS_Store
-.vite/
 *.log
+.env
+.env.local
+.env.*.local
+.wrangler/
+.vercel/
 
-# Local Stitch exports
-stitch_exports/
+# Obsidian
+.obsidian/

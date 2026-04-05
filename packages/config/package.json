@@ -1,0 +1,8 @@
+{
+  "name": "@joker/config",
+  "version": "0.0.1",
+  "private": true,
+  "exports": {
+    "./tsconfig.json": "./tsconfig.json"
+  }
+}

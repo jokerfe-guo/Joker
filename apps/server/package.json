@@ -1,0 +1,21 @@
+{
+  "name": "@joker/server",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.6.20",
+    "drizzle-orm": "^0.38.3",
+    "@joker/db": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "@types/node": "^22.10.10",
+    "@cloudflare/workers-types": "^4.20241218.0",
+    "tsx": "^4.19.2"
+  }
+}
