@@ -1,12 +1,9 @@
 import type { Metadata } from 'next'
 import { AnalyticsClient } from '@/components/admin/AnalyticsClient'
+import type { DailyStat, TopPost, OverviewData } from '@/lib/admin-types'
 
 export const metadata: Metadata = { title: 'Analytics' }
 export const dynamic = 'force-dynamic'
-
-interface DailyStat { date: string; views: number }
-interface TopPost { slug: string; viewCount: number; likeCount: number }
-interface OverviewData { total: number; topPosts: TopPost[] }
 
 export default async function AdminAnalyticsPage() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'

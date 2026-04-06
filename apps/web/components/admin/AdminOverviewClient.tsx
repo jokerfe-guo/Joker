@@ -9,12 +9,10 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts'
-
-interface TopPost { slug: string; viewCount: number; likeCount: number }
-interface DailyStat { date: string; views: number }
+import type { TopPost, DailyStat, OverviewData } from '@/lib/admin-types'
 
 interface Props {
-  overview: { total: number; topPosts: TopPost[] }
+  overview: OverviewData
   daily: DailyStat[]
 }
 

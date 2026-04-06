@@ -7,9 +7,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, Cell,
 } from 'recharts'
-
-interface DailyStat { date: string; views: number }
-interface TopPost { slug: string; viewCount: number; likeCount: number }
+import type { DailyStat, TopPost } from '@/lib/admin-types'
 
 interface Props {
   daily7: DailyStat[]

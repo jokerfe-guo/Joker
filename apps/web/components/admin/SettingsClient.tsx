@@ -1,15 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-
-interface GiscusConfig { repo: string; repoId: string; category: string; categoryId: string }
-interface SocialLinks { github: string; [key: string]: string }
-interface Settings {
-  site_title: string
-  site_description: string
-  social_links: SocialLinks
-  giscus_config: GiscusConfig
-}
+import type { AdminSettings, GiscusConfig, SocialLinks } from '@/lib/admin-types'
 
 const inputStyle: React.CSSProperties = {
   width: '100%',
@@ -82,7 +74,7 @@ function SectionCard({ title, children, onSave }: { title: string; children: Rea
   )
 }
 
-export function SettingsClient({ settings: init }: { settings: Settings }) {
+export function SettingsClient({ settings: init }: { settings: AdminSettings }) {
   const [title, setTitle] = useState(init.site_title)
   const [description, setDescription] = useState(init.site_description)
   const [social, setSocial] = useState<SocialLinks>(init.social_links)
@@ -107,13 +99,11 @@ export function SettingsClient({ settings: init }: { settings: Settings }) {
         Site-wide configuration stored in Cloudflare D1. Changes take effect on next page load.
       </p>
 
-      {/* Site identity */}
       <SectionCard title="Site Identity" onSave={() => save('site_title', title).then(() => save('site_description', description))}>
         <Field label="Site Title" value={title} onChange={setTitle} hint="Used in <title> tags and OpenGraph" />
         <Field label="Site Description" value={description} onChange={setDescription} hint="Used in meta description and RSS feed" />
       </SectionCard>
 
-      {/* Social links */}
       <SectionCard title="Social Links" onSave={() => save('social_links', social)}>
         <Field
           label="GitHub URL"
@@ -123,7 +113,6 @@ export function SettingsClient({ settings: init }: { settings: Settings }) {
         />
       </SectionCard>
 
-      {/* Giscus comments */}
       <SectionCard title="Giscus Comments" onSave={() => save('giscus_config', giscus)}>
         <p style={{ fontSize: '0.8rem', color: 'rgba(222,232,245,0.45)', marginBottom: 20 }}>
           Get these values from{' '}
@@ -140,7 +129,6 @@ export function SettingsClient({ settings: init }: { settings: Settings }) {
         </div>
       </SectionCard>
 
-      {/* Danger zone hint */}
       <div className="glass" style={{ borderRadius: 16, padding: '20px 24px', border: '1px solid rgba(255,80,80,0.2)' }}>
         <p style={{ fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.14em', color: 'rgba(255,120,120,0.7)', margin: '0 0 8px' }}>
           Access Control
