@@ -2,11 +2,32 @@ name = "joker-blog"
 compatibility_date = "2026-04-01"
 compatibility_flags = ["nodejs_compat"]
 
-[[d1_databases]]
-binding = "DB"
-database_name = "joker-blog"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+# ── Pages configuration ─────────────────────────────────────────────────
+pages_build_output_dir = ".next"
 
+# ── D1 database binding ─────────────────────────────────────────────────
+# 1. Create:  wrangler d1 create joker-blog
+# 2. Copy the returned database_id here
+[[d1_databases]]
+binding      = "DB"
+database_name = "joker-blog"
+database_id  = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+# ── Environment variables (non-secret) ─────────────────────────────────
 [vars]
 NEXT_PUBLIC_SITE_URL = "https://joker.ai"
-ADMIN_SECRET = "REPLACE_WITH_YOUR_SECRET"
+
+# ── Local dev overrides (wrangler pages dev) ────────────────────────────
+[env.local]
+[env.local.vars]
+NEXT_PUBLIC_SITE_URL         = "http://localhost:3000"
+NEXT_PUBLIC_SKIP_ADMIN_AUTH  = "true"
+
+# ── Preview environment ─────────────────────────────────────────────────
+[env.preview]
+[env.preview.vars]
+NEXT_PUBLIC_SITE_URL = "https://preview.joker.dev"
+
+# ── Secrets (set via wrangler secret put, not in this file) ────────────
+# wrangler secret put CLOUDFLARE_API_TOKEN
+# wrangler secret put CF_TEAM_DOMAIN        (e.g. myteam.cloudflareaccess.com)
