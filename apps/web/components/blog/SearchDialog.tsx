@@ -8,6 +8,17 @@ interface SearchResult {
   excerpt: string
 }
 
+interface PagefindModule {
+  search(query: string): Promise<{
+    results: Array<{ data: () => Promise<SearchResult> }>
+  }>
+}
+
+async function loadPagefind(): Promise<PagefindModule> {
+  const importer = new Function('return import("/pagefind/pagefind.js")') as () => Promise<PagefindModule>
+  return importer()
+}
+
 export function SearchTrigger() {
   const [open, setOpen] = useState(false)
 
@@ -58,9 +69,8 @@ function SearchModal({ onClose }: { onClose: () => void }) {
     // Falls back gracefully in dev mode
     const search = async () => {
       try {
-        // pagefind is a static asset generated at postbuild time — not a real module
-        // webpackIgnore tells the bundler not to try to resolve this at build time
-        const pagefind = await import(/* webpackIgnore: true */ '/pagefind/pagefind.js')
+        // Pagefind is emitted to /public at build time, so we import it only at runtime.
+        const pagefind = await loadPagefind()
         const res = await pagefind.search(query)
         const data = await Promise.all(res.results.slice(0, 8).map((r: { data: () => Promise<SearchResult> }) => r.data()))
         setResults(data)

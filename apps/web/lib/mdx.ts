@@ -3,28 +3,23 @@ import remarkGfm from 'remark-gfm'
 import remarkFrontmatter from 'remark-frontmatter'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
-import { createHighlighter, type BundledLanguage, type BundledTheme } from 'shiki'
 import type { ReactNode } from 'react'
 
-// ─────────────────────────────────────────
-// Singleton Shiki highlighter
-// Initialised once, reused across requests
-// ─────────────────────────────────────────
-let highlighterPromise: ReturnType<typeof createHighlighter> | null = null
-
-async function getHighlighter() {
-  if (!highlighterPromise) {
-    highlighterPromise = createHighlighter({
-      themes: ['github-dark-dimmed', 'github-light'],
-      langs: [
-        'typescript', 'tsx', 'javascript', 'jsx',
-        'css', 'html', 'json', 'bash', 'shell',
-        'markdown', 'mdx', 'sql', 'yaml', 'toml',
-      ] as BundledLanguage[],
-    })
-  }
-  return highlighterPromise
+type HastText = { type: 'text'; value: string }
+type HastElement = {
+  type: string
+  tagName: string
+  properties?: Record<string, unknown>
+  children: HastElementContent[]
+  value?: string
 }
+type HastElementContent = HastElement | HastText
+type HastRoot = { type: string; children: HastElementContent[] }
+
+type MdastText = { type: 'text'; value: string }
+type MdastLink = { type: 'link'; url: string; children: MdastText[] }
+type MdastParent = { children: Array<MdastText | MdastLink> }
+type MdastRoot = { type: string; children: Array<MdastText | MdastLink> }
 
 // ─────────────────────────────────────────
 // Compiled MDX result
@@ -44,7 +39,6 @@ export interface Heading {
 // Compile raw Markdown → React Server Component
 // ─────────────────────────────────────────
 export async function compileMdx(source: string): Promise<CompiledPost> {
-  const highlighter = await getHighlighter()
   const headings: Heading[] = []
 
   const { content } = await compileMDX({
@@ -66,35 +60,11 @@ export async function compileMdx(source: string): Promise<CompiledPost> {
               properties: { className: ['heading-anchor'] },
             },
           ],
-          // Shiki code highlighter (rehype plugin inline)
-          () => (tree: import('hast').Root) => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const { visit } = require('unist-util-visit') as any
-            visit(tree, 'element', (node: import('hast').Element) => {
-              if (node.tagName !== 'pre') return
-              const code = node.children[0]
-              if (!code || code.type !== 'element' || code.tagName !== 'code') return
-
-              const className = (code.properties?.className as string[]) ?? []
-              const langClass = className.find((c) => c.startsWith('language-'))
-              const lang = (langClass?.replace('language-', '') ?? 'text') as BundledLanguage
-
-              const rawCode = extractText(code)
-              const html = highlighter.codeToHtml(rawCode, {
-                lang,
-                theme: 'github-dark-dimmed' as BundledTheme,
-              })
-
-              node.type = 'raw' as 'element'
-              ;(node as unknown as { value: string }).value = html
-              node.children = []
-            })
-          },
           // Heading extractor for TOC
-          () => (tree: import('hast').Root) => {
+          () => (tree: HastRoot) => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const { visit } = require('unist-util-visit') as any
-            visit(tree, 'element', (node: import('hast').Element) => {
+            visit(tree, 'element', (node: HastElement) => {
               const match = node.tagName.match(/^h([1-4])$/)
               if (!match) return
               const level = parseInt(match[1]) as 1 | 2 | 3 | 4
@@ -116,12 +86,12 @@ export async function compileMdx(source: string): Promise<CompiledPost> {
 // Converts [[other-post]] → [other-post](/blog/other-post)
 // ─────────────────────────────────────────
 function wikiliksPlugin() {
-  return (tree: import('mdast').Root) => {
+  return (tree: MdastRoot) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { visit } = require('unist-util-visit') as any
-    visit(tree, 'text', (node: import('mdast').Text, index: number, parent: import('mdast').Parent) => {
+    visit(tree, 'text', (node: MdastText, index: number, parent: MdastParent) => {
       const wikilinkRegex = /\[\[([^\]]+)\]\]/g
-      const parts = []
+      const parts: Array<MdastText | MdastLink> = []
       let last = 0
       let match
 
@@ -151,10 +121,10 @@ function wikiliksPlugin() {
 // ─────────────────────────────────────────
 // Extract plain text from a hast node
 // ─────────────────────────────────────────
-function extractText(node: import('hast').Element | import('hast').ElementContent): string {
-  if (node.type === 'text') return (node as import('hast').Text).value
+function extractText(node: HastElement | HastElementContent): string {
+  if (node.type === 'text') return (node as HastText).value
   if ('children' in node) {
-    return (node.children as import('hast').ElementContent[]).map(extractText).join('')
+    return (node.children as HastElementContent[]).map(extractText).join('')
   }
   return ''
 }

@@ -7,6 +7,10 @@ interface LikeButtonProps {
   initialCount?: number
 }
 
+function hasLikeCount(data: unknown): data is { likeCount?: number } {
+  return typeof data === 'object' && data !== null && 'likeCount' in data
+}
+
 export function LikeButton({ slug, initialCount = 0 }: LikeButtonProps) {
   const storageKey = `liked:${slug}`
   const [count, setCount] = useState(initialCount)
@@ -20,8 +24,10 @@ export function LikeButton({ slug, initialCount = 0 }: LikeButtonProps) {
     // Fetch current count
     fetch(`/api/views/${encodeURIComponent(slug)}`)
       .then((r) => r.json())
-      .then((data: { likeCount?: number }) => {
-        if (typeof data.likeCount === 'number') setCount(data.likeCount)
+      .then((data: unknown) => {
+        if (hasLikeCount(data) && typeof data.likeCount === 'number') {
+          setCount(data.likeCount)
+        }
       })
       .catch(() => {})
   }, [slug, storageKey])

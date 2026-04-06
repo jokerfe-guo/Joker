@@ -57,7 +57,6 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
             style={{
               fontSize: '0.82rem',
               lineHeight: 1.4,
-              paddingLeft: heading.level === 2 ? 0 : heading.level === 3 ? 12 : 0,
               color: activeId === heading.id ? 'var(--primary)' : 'var(--text-muted)',
               textDecoration: 'none',
               transition: '180ms ease',
