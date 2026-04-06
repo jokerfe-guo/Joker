@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
+    "deploy": "cd apps/web && pnpm exec wrangler pages deploy .next --project-name=joker-blog --commit-dirty=true",
     "lint": "turbo lint",
     "type-check": "turbo type-check"
   },
