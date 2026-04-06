@@ -6,6 +6,8 @@ import { GiscusComments } from '@/components/blog/GiscusComments'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { getPostBySlug, getAllSlugs } from '@/lib/content'
 import { compileMdx } from '@/lib/mdx'
+import { ViewTracker } from '@/components/analytics/ViewTracker'
+import { LikeButton } from '@/components/analytics/LikeButton'
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>
@@ -54,6 +56,8 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     <section className="screen article-layout-screen">
       <GlassNav />
       <ReadingProgress />
+      {/* Fire-and-forget view count increment */}
+      <ViewTracker slug={slug} />
 
       {/* Two-column layout: article + TOC */}
       <div
@@ -100,14 +104,19 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             {content}
           </div>
 
+          {/* Like button */}
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '32px 0 8px' }}>
+            <LikeButton slug={slug} />
+          </div>
+
           {/* Comments */}
           <GiscusComments slug={slug} />
         </article>
 
-        {/* Table of contents — hidden on mobile via CSS */}
-        <div style={{ display: 'none' }} className="toc-sidebar">
+        {/* Table of contents sidebar — visible on wide screens only */}
+        <aside className="toc-sidebar">
           <TableOfContents headings={headings} />
-        </div>
+        </aside>
       </div>
     </section>
   )

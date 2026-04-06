@@ -1,13 +1,27 @@
-// Phase 3: full admin dashboard
-// Admin is protected by Cloudflare Access in production
-export default function AdminPage() {
-  return (
-    <div style={{ padding: '40px', color: '#f8fbff' }}>
-      <p style={{ color: '#00d4ff', fontSize: '0.72rem', textTransform: 'uppercase', letterSpacing: '0.18em' }}>Admin</p>
-      <h1 style={{ fontSize: '2rem', fontWeight: 700, marginTop: 8 }}>Dashboard</h1>
-      <p style={{ color: 'rgba(222,232,245,0.68)', marginTop: 12 }}>
-        Full analytics dashboard coming in Phase 3.
-      </p>
-    </div>
-  )
+import type { Metadata } from 'next'
+import { AdminOverviewClient } from '@/components/admin/AdminOverviewClient'
+
+export const metadata: Metadata = { title: 'Overview' }
+
+export const dynamic = 'force-dynamic'
+
+export default async function AdminPage() {
+  // Fetch data server-side from our own API
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+
+  let overview = { total: 0, topPosts: [] as { slug: string; viewCount: number; likeCount: number }[] }
+  let daily: { date: string; views: number }[] = []
+
+  try {
+    const [overviewRes, dailyRes] = await Promise.all([
+      fetch(`${baseUrl}/api/admin/analytics/overview`, { cache: 'no-store' }),
+      fetch(`${baseUrl}/api/admin/analytics/daily?days=30`, { cache: 'no-store' }),
+    ])
+    if (overviewRes.ok) overview = await overviewRes.json()
+    if (dailyRes.ok) daily = await dailyRes.json()
+  } catch {
+    // D1 not connected yet — show zeros
+  }
+
+  return <AdminOverviewClient overview={overview} daily={daily} />
 }
