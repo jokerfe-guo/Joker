@@ -58,8 +58,9 @@ function SearchModal({ onClose }: { onClose: () => void }) {
     // Falls back gracefully in dev mode
     const search = async () => {
       try {
-        // @ts-ignore — pagefind is loaded as a static asset after build
-        const pagefind = await import('/pagefind/pagefind.js')
+        // pagefind is a static asset generated at postbuild time — not a real module
+        // webpackIgnore tells the bundler not to try to resolve this at build time
+        const pagefind = await import(/* webpackIgnore: true */ '/pagefind/pagefind.js')
         const res = await pagefind.search(query)
         const data = await Promise.all(res.results.slice(0, 8).map((r: { data: () => Promise<SearchResult> }) => r.data()))
         setResults(data)
