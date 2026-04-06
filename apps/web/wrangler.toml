@@ -17,16 +17,15 @@ database_id  = "5710b15b-d6fd-4d6f-ab3e-2535731b4fd2"
 [vars]
 NEXT_PUBLIC_SITE_URL = "https://joker.ai"
 
-# ── Local dev overrides (wrangler pages dev) ────────────────────────────
-[env.local]
-[env.local.vars]
-NEXT_PUBLIC_SITE_URL         = "http://localhost:3000"
-NEXT_PUBLIC_SKIP_ADMIN_AUTH  = "true"
-
 # ── Preview environment ─────────────────────────────────────────────────
 [env.preview]
 [env.preview.vars]
 NEXT_PUBLIC_SITE_URL = "https://preview.joker.dev"
+
+# ── Production environment ──────────────────────────────────────────────
+[env.production]
+[env.production.vars]
+NEXT_PUBLIC_SITE_URL = "https://joker.ai"
 
 # ── Secrets (set via wrangler secret put, not in this file) ────────────
 # wrangler secret put CLOUDFLARE_API_TOKEN
