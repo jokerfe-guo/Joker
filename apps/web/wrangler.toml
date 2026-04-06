@@ -11,7 +11,7 @@ pages_build_output_dir = ".next"
 [[d1_databases]]
 binding      = "DB"
 database_name = "joker-blog"
-database_id  = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id  = "5710b15b-d6fd-4d6f-ab3e-2535731b4fd2"
 
 # ── Environment variables (non-secret) ─────────────────────────────────
 [vars]
