@@ -1,22 +1,22 @@
 import { Hono } from 'hono'
 import { handle } from 'hono/vercel'
+import type { Context } from 'hono'
 import { eq, sql, desc } from 'drizzle-orm'
 import { getDb, postViews, dailyStats, resumeSections, siteSettings } from '@joker/db'
 
 // ─── Type for Cloudflare Pages env bindings ────────────────────────────────
-type Env = { DB: D1Database }
+type Env = { Bindings: { DB: D1Database } }
 
-const app = new Hono<{ Bindings: Env }>().basePath('/api')
+const app = new Hono<Env>().basePath('/api')
 
 // ─── Health ───────────────────────────────────────────────────────────────
 app.get('/health', (c) => c.json({ status: 'ok', phase: 3 }))
 
 // ─── Helper: get D1 from request env ─────────────────────────────────────
-function db(c: Parameters<Parameters<typeof app.get>[1]>[0]) {
-  // Cloudflare Pages exposes env via c.env
-  const env = (c as unknown as { env: Env }).env
-  if (!env?.DB) throw new Error('D1 binding not available — ensure wrangler.toml is configured')
-  return getDb(env.DB)
+function db(c: Context<Env>) {
+  const d1 = c.env?.DB
+  if (!d1) throw new Error('D1 binding not available — ensure wrangler.toml is configured')
+  return getDb(d1)
 }
 
 // ─── Today's date string YYYY-MM-DD ──────────────────────────────────────
